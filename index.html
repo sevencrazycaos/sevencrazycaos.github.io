@@ -1,143 +1,253 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Central de Votação – Simulação</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eletricista Pro | Serviços Elétricos 24h</title>
+    
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #fdbb2d;
+            --dark: #222;
+            --light: #f4f4f4;
+            --success: #25d366;
+        }
 
-<style>
-body {
-  font-family: 'Arial', sans-serif;
-  background: radial-gradient(circle at top, #000, #1c1c1c);
-  color: #fff;
-  margin: 0;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
 
-.container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 16px;
-}
+        body {
+            line-height: 1.6;
+            background-color: var(--light);
+            color: var(--dark);
+            scroll-behavior: smooth;
+        }
 
-h1 {
-  text-align: center;
-  color: #f1c40f;
-}
+        /* Header & Nav */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
 
-.notice {
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.7;
-}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.loading {
-  text-align: center;
-  font-size: 18px;
-  margin: 20px 0;
-  animation: blink 1s infinite;
-}
+        .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
 
-@keyframes blink {
-  50% { opacity: 0.3; }
-}
+        .logo span { color: var(--secondary); }
 
-.candidate {
-  margin-top: 20px;
-}
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
 
-.name {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-}
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
 
-.bar {
-  width: 100%;
-  height: 18px;
-  background: #333;
-  border-radius: 9px;
-  overflow: hidden;
-}
+        nav ul li a:hover { color: var(--secondary); }
 
-.fill {
-  height: 100%;
-  width: 0;
-  transition: width 0.5s linear;
-}
+        .btn-whatsapp-nav {
+            background: var(--success);
+            border-radius: 5px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
 
-.dudu { background: #27ae60; }
-.a { background: #e74c3c; }
-.b { background: #f39c12; }
-.c { background: #9b59b6; }
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1350&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-top: 60px;
+        }
 
-.footer {
-  margin-top: 25px;
-  font-size: 11px;
-  text-align: center;
-  opacity: 0.6;
-}
-</style>
+        .hero-content h1 { font-size: 3rem; margin-bottom: 20px; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 30px; }
+
+        .btn-cta {
+            background: var(--secondary);
+            color: #000;
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+
+        .btn-cta:hover { transform: scale(1.05); background: #eab026; }
+
+        /* Serviços */
+        section { padding: 80px 10%; max-width: 1200px; margin: 0 auto; }
+        h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; color: var(--primary); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+        .card i { font-size: 3rem; color: var(--secondary); margin-bottom: 15px; }
+
+        /* Formulário */
+        .contact-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            nav ul { display: none; } /* Simplificação para mobile */
+            .hero-content h1 { font-size: 2rem; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-  <h1>Central de Votação</h1>
-  <div class="notice">Simulação fictícia para testes</div>
+    <header>
+        <nav>
+            <div class="logo">⚡ Caos<span>Eletricista</span></div>
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <li><a href="https://wa.me/5511999999999" target="_blank" class="btn-whatsapp-nav">WhatsApp</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <div class="loading" id="loading">📡 Coletando votos...</div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Soluções Elétricas Profissionais</h1>
+            <p>Segurança para sua casa ou empresa com quem entende do assunto.</p>
+            <a href="#contato" class="btn-cta">Orçamento Sem Compromisso</a>
+        </div>
+    </section>
 
-  <div class="candidate">
-    <div class="name"><span>Dudu</span><span id="pd">0%</span></div>
-    <div class="bar"><div class="fill dudu" id="bd"></div></div>
-  </div>
+    <section id="servicos">
+        <h2>O que fazemos</h2>
+        <div class="services-grid">
+            <div class="card">
+                <h3>Residencial</h3>
+                <p>Instalação de tomadas, lustres, chuveiros e revisão de fiação completa.</p>
+            </div>
+            <div class="card">
+                <h3>Comercial</h3>
+                <p>Manutenção de quadros de energia, sistemas trifásicos e iluminação de vitrines.</p>
+            </div>
+            <div class="card">
+                <h3>Emergências</h3>
+                <p>Atendimento rápido para curtos-circuitos e falta de energia inesperada.</p>
+            </div>
+        </div>
+    </section>
 
-  <div class="candidate">
-    <div class="name"><span>Participante A</span><span id="pa">0%</span></div>
-    <div class="bar"><div class="fill a" id="ba"></div></div>
-  </div>
+    <section id="contato">
+        <h2>Solicite um Contato</h2>
+        <div class="contact-container">
+            <form id="eletricistaForm">
+                <input type="text" id="nome" placeholder="Seu Nome Completo" required>
+                <input type="tel" id="telefone" placeholder="Seu Telefone/WhatsApp" required>
+                <textarea id="servico" rows="4" placeholder="Qual serviço você precisa?" required></textarea>
+                <button type="submit">Enviar para o WhatsApp</button>
+            </form>
+        </div>
+    </section>
 
-  <div class="candidate">
-    <div class="name"><span>Participante B</span><span id="pb">0%</span></div>
-    <div class="bar"><div class="fill b" id="bb"></div></div>
-  </div>
+    <footer>
+        <p>&copy; 2023 Caos Eletricista - Atendendo com Qualidade e Segurança.</p>
+    </footer>
 
-  <div class="candidate">
-    <div class="name"><span>Participante C</span><span id="pc">0%</span></div>
-    <div class="bar"><div class="fill c" id="bc"></div></div>
-  </div>
+    <script>
+        document.getElementById('eletricistaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const tel = document.getElementById('telefone').value;
+            const msg = document.getElementById('servico').value;
 
-  <div class="footer">⚠️ Conteúdo fictício – sem vínculo oficial</div>
-</div>
+            // Substitua o número abaixo pelo seu número de WhatsApp (DDD + Número)
+            const meuNumero = "5511999999999"; 
+            
+            const texto = `Olá! Meu nome é ${nome}. Telefone: ${tel}. Gostaria de um orçamento para: ${msg}`;
+            const url = `https://wa.me/${meuNumero}?text=${encodeURIComponent(texto)}`;
 
-<script>
-let votos = { d: 0, a: 0, b: 0, c: 0 };
-let alvo = { d: 99, a: 0.5, b: 0.3, c: 0.2 };
-
-setTimeout(() => {
-  document.getElementById("loading").innerText = "📊 Atualizando percentuais...";
-  atualizar();
-}, 2000);
-
-function atualizar() {
-  let fim = true;
-
-  for (let k in votos) {
-    if (votos[k] < alvo[k]) {
-      votos[k] += Math.random() * 1.2;
-      if (votos[k] > alvo[k]) votos[k] = alvo[k];
-      fim = false;
-    }
-
-    document.getElementById("p" + k).innerText = votos[k].toFixed(1) + "%";
-    document.getElementById("b" + k).style.width = votos[k] + "%";
-  }
-
-  if (!fim) setTimeout(atualizar, 150);
-}
-</script>
+            window.open(url, '_blank');
+        });
+    </script>
 
 </body>
 </html>
